@@ -26,4 +26,4 @@
   service:
     name: postfix
     state: started
-    enabled: yes
+    enabled: 'yes'
