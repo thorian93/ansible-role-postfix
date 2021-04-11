@@ -17,12 +17,10 @@
     group: root
     mode: 0600
   register: _postfix_sasl_passwd
-  notify: restart postfix
   when: postfix_smtp_sasl_auth_enable | bool
-
-- name: "Run postmap on sasl_passwd Map."
-  command: /usr/sbin/postmap /etc/postfix/sasl_passwd
-  when: postfix_smtp_sasl_auth_enable | bool and _postfix_sasl_passwd.changed
+  notify:
+    - postmap sasl_passwd
+    - restart postfix
 
 - name: "Configure Postfix generic Map."
   template:
@@ -32,11 +30,9 @@
     group: root
     mode: 0644
   register: _postfix_generic
-  notify: restart postfix
-
-- name: "Run postmap on generic Map."
-  command: /usr/sbin/postmap /etc/postfix/generic
-  when: _postfix_generic is defined and _postfix_generic.changed
+  notify:
+    - postmap generic
+    - restart postfix
 
 - name: "Configure Postfix local User Relay."
   template:

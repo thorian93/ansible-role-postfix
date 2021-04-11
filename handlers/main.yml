@@ -2,6 +2,12 @@
 - name: run newaliases
   command: newaliases
 
+- name: "postmap generic"
+  command: /usr/sbin/postmap /etc/postfix/generic
+
+- name: "postmap sasl_passwd"
+  command: /usr/sbin/postmap /etc/postfix/sasl_passwd
+
 - name: restart postfix
   service:
     name: postfix
