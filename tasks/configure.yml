@@ -42,13 +42,13 @@
     group: root
     mode: 0644
   notify: restart postfix
-  when: postfix_local_user_relay_address != ""
+  when: postfix_local_user_relay_address | length
 
 - name: "Configure Postfix Sender Canonical Maps."
   template:
     src: sender_canonical_maps.j2
     dest: /etc/postfix/sender_canonical_maps
-  when: postfix_rewrite_sender_address != ""
+  when: postfix_rewrite_sender_address | length
   notify: restart postfix
 
 - name: "Configure /etc/aliases."
