@@ -1,0 +1,13 @@
+---
+- name: run newaliases
+  command: newaliases
+
+- name: restart postfix
+  service:
+    name: postfix
+    state: restarted
+  notify: postfix send test mail
+
+- name: "postfix send test mail"
+  shell: mail -s "Test Mail from `hostname`" {{ postfix_send_test_mail_to }} < /dev/null
+  when: postfix_send_test_mail_to != ""

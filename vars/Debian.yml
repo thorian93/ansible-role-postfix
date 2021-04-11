@@ -1,0 +1,9 @@
+---
+postfix_prerequisites:
+  - postfix
+  - ca-certificates
+  - mailutils
+  - libsasl2-modules
+  - postfix-pcre
+
+postfix_postalias: /usr/sbin/postaliases

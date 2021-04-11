@@ -1,0 +1,89 @@
+# {{ ansible_managed }}
+
+# See /usr/share/postfix/main.cf.dist for a commented, more complete version
+
+smtpd_banner = $myhostname ESMTP $mail_name ({{ ansible_distribution }})
+biff = no
+
+# appending .domain is the MUA's job
+append_dot_mydomain = no
+
+readme_directory = no
+
+# TLS parameters
+{% if postfix_smtpd_use_tls %}
+smtpd_use_tls=yes
+smtpd_tls_cert_file={{ postfix_tls_cert_file }}
+smtpd_tls_key_file={{ postfix_tls_key_file }}
+smtpd_tls_session_cache_database = btree:${data_directory}/smtpd_scache
+smtp_tls_session_cache_database = btree:${data_directory}/smtp_scache
+{% if postfix_smtp_tls_wrappermode is defined %}
+smtp_tls_wrappermode = {{ postfix_smtp_tls_wrappermode }}
+{% endif %}
+{% if postfix_smtp_tls_security_level is defined %}
+smtp_tls_security_level = {{ postfix_smtp_tls_security_level }}
+{% endif %}
+{% endif %}
+
+myhostname = {{ postfix_myhostname }}
+myorigin = {{ postfix_myorigin }}
+alias_maps = hash:/etc/aliases
+smtp_generic_maps = hash:/etc/postfix/generic
+{% if postfix_rewrite_sender_address %}
+sender_canonical_maps = pcre:/etc/postfix/sender_canonical_maps
+{% endif %}
+alias_database = hash:/etc/aliases
+mydestination = {{ postfix_mydestination }}
+{% if postfix_masquerade_domains | length %}
+masquerade_domains = {{ postfix_masquerade_domains }}
+{% endif %}
+{% if postfix_local_user_relay_address %}
+# Optional catch-all destination for unknown local(8) recipients:
+luser_relay = {{ postfix_local_user_relay_address }}
+virtual_alias_maps = pcre:/etc/postfix/virtual-pcre
+{% endif %}
+{% if postfix_local_recipient_map %}
+local_recipient_maps = {{ postfix_local_recipient_map }}
+{% endif %}
+{% if postfix_relayhost %}
+relayhost = {{ postfix_relayhost }}
+{% endif %}
+mynetworks = {{ postfix_mynetworks }}
+mailbox_size_limit = 0
+recipient_delimiter = +
+inet_interfaces = {{ postfix_inet_interfaces }}
+inet_protocols = {{ postfix_inet_protocols }}
+
+{% if postfix_smtp_sasl_auth_enable %}
+smtp_sasl_auth_enable = yes
+smtp_sasl_password_maps = hash:/etc/postfix/sasl_passwd
+smtp_sasl_security_options = {{ postfix_smtp_sasl_security_options }}
+{% if postfix_smtp_use_tls %}
+smtp_use_tls = yes
+smtp_tls_security_level = encrypt
+smtp_tls_CApath = {{ postfix_smtp_tls_CApath }} 
+{% endif %}
+{% endif %}
+
+{% if postfix_smtpd_relay_restrictions|default(None) %}
+smtpd_relay_restrictions = {{ postfix_smtpd_relay_restrictions }}
+{% endif %}
+{% if postfix_mydomain is defined %}
+mydomain = {{ postfix_mydomain }}
+{% endif %}
+{% if postfix_notify_classes is defined %}
+notify_classes = {{ postfix_notify_classes }}
+{% endif %}
+{% if postfix_use_procmail is defined %}
+mailbox_command = /usr/bin/procmail -a "$EXTENSION"
+{% endif %}
+{% if postfix_notify_classes is defined %}
+notify_classes = {{ postfix_notify_classes }}
+{% endif %}
+
+# Queue
+bounce_queue_lifetime = {{bounce_queue_lifetime }}
+maximal_queue_lifetime = {{maximal_queue_lifetime }}
+maximal_backoff_time = {{maximal_backoff_time }}
+minimal_backoff_time = {{minimal_backoff_time }}
+queue_run_delay = {{queue_run_delay }}

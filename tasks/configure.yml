@@ -1,0 +1,70 @@
+---
+- name: "Configure Postfix main.cf."
+  template:
+    src: main.cf.j2
+    dest: "/etc/postfix/main.cf"
+    backup: 'yes'
+    owner: root
+    group: root
+    mode: 0644
+  notify: restart postfix
+
+- name: "Configure Postfix sasl_passwd Map."
+  template:
+    src: sasl_passwd.j2
+    dest: /etc/postfix/sasl_passwd
+    owner: root
+    group: root
+    mode: 0600
+  register: _postfix_sasl_passwd
+  notify: restart postfix
+  when: postfix_smtp_sasl_auth_enable | bool
+
+- name: "Run postmap on sasl_passwd Map."
+  command: /usr/sbin/postmap /etc/postfix/sasl_passwd
+  when: postfix_smtp_sasl_auth_enable | bool and _postfix_sasl_passwd.changed
+
+- name: "Configure Postfix generic Map."
+  template:
+    src: generic.j2
+    dest: /etc/postfix/generic
+    owner: root
+    group: root
+    mode: 0644
+  register: _postfix_generic
+  notify: restart postfix
+
+- name: "Run postmap on generic Map."
+  command: /usr/sbin/postmap /etc/postfix/generic
+  when: _postfix_generic is defined and _postfix_generic.changed
+
+- name: "Configure Postfix local User Relay."
+  template:
+    src: virtual.j2
+    dest: /etc/postfix/virtual-pcre
+    owner: root
+    group: root
+    mode: 0644
+  notify: restart postfix
+  when: postfix_local_user_relay_address != ""
+
+- name: "Configure Postfix Sender Canonical Maps."
+  template:
+    src: sender_canonical_maps.j2
+    dest: /etc/postfix/sender_canonical_maps
+  when: postfix_rewrite_sender_address != ""
+  notify: restart postfix
+
+- name: "Configure /etc/aliases."
+  lineinfile:
+    path: /etc/aliases
+    line: "{{ item.line }}"
+    regexp: "{{ item.regexp }}"
+    insertbefore: "{{ item.insertbefore }}"
+    state: "{{ item.state }}"
+    setype: "{{ item.setype }}"
+    backup: "{{ item.backup }}"
+  with_items: "{{ postfix_etc_aliases }}"
+  notify:
+    - run newaliases
+    - restart postfix
