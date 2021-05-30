@@ -1,7 +1,8 @@
 ---
 galaxy_info:
-  author: Thorian93
-  description: Ansible Role Postfix
+  role_name: postfix
+  author: thorian93
+  description: Postfix Mail Server
   license: "license (MIT)"
 
   min_ansible_version: 2.9
@@ -13,6 +14,7 @@ galaxy_info:
     - mail
     - email
     - messaging
+    - smtp
 
   platforms:
     # - name: EL
