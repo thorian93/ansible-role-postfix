@@ -2,9 +2,9 @@
 
 This role configures Postfix on RHEL/CentOS, Debian/Ubuntu, Fedora and openSUSE servers.
 
-[![Ansible Role: Postfix](https://img.shields.io/ansible/role/54168?style=flat-square)](https://galaxy.ansible.com/thorian93/ansible_role_postfix)
-[![Ansible Role: Postfix](https://img.shields.io/ansible/quality/54168?style=flat-square)](https://galaxy.ansible.com/thorian93/ansible_role_postfix)
-[![Ansible Role: Postfix](https://img.shields.io/ansible/role/d/54168?style=flat-square)](https://galaxy.ansible.com/thorian93/ansible_role_postfix)
+[![Ansible Role: Postfix](https://img.shields.io/ansible/role/55143?style=flat-square)](https://galaxy.ansible.com/thorian93/postfix)
+[![Ansible Role: Postfix](https://img.shields.io/ansible/quality/55143?style=flat-square)](https://galaxy.ansible.com/thorian93/postfix)
+[![Ansible Role: Postfix](https://img.shields.io/ansible/role/d/55143?style=flat-square)](https://galaxy.ansible.com/thorian93/postfix)
 
 ## Requirements
 
@@ -19,9 +19,9 @@ No special requirements; note that this role requires root access, so either run
 
 Available variables are listed below, along with default values (see `defaults/main.yml`):
 
-    postfix_enabled: 'true'
+    postfix_managed: 'true'
 
-Enable Postfix on boot.
+Enable Postfix management through this role.
 
     postfix_etc_aliases:
     - name: "Redirect root mails."
