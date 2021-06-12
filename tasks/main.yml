@@ -6,6 +6,11 @@
         (ansible_distribution_version is not defined) or
         (ansible_distribution+" "+ansible_distribution_major_version not in postfix_stable_os)
 
+- name: "Preflight - Fail if target host should not be managed by this role."
+  fail:
+    msg: "This host should not be configured through this role! See the 'postfix_managed' variable."
+  when: not (postfix_managed | bool)
+
 - name: "Include OS Family specific Variables."
   include_vars: "{{ ansible_os_family }}.yml"
 
@@ -21,6 +26,9 @@
 
 - name: "Include Configuration Playbook."
   import_tasks: configure.yml
+
+# - import_tasks: sslcert.yml
+#   when: postfix_tls_generate
 
 - name: "Ensure Postfix Service is enabled."
   service:
