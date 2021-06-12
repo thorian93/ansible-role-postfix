@@ -14,7 +14,7 @@ postfix_stable_os:
   - openSUSE Leap 15
   - openSUSE Leap 42
 
-postfix_enabled: 'true'
+postfix_managed: 'true'
 
 postfix_etc_aliases:
   - name: "Redirect root mails."
@@ -49,11 +49,11 @@ postfix_local_user_relay_address: ""
 # arbitrary sender addresses.
 postfix_rewrite_sender_address: ""
 
-# Send a test mail to this address when Postfix configuration changes
-postfix_send_test_mail_to: ""
-
 postfix_smtp_sasl_user: "{{ ansible_ssh_user | default('root') }}"
 postfix_smtp_sasl_password: ""
+
+# Send a test mail to this address when Postfix configuration changes
+postfix_send_test_mail_to: ""
 
 # Queue
 bounce_queue_lifetime: 1h
