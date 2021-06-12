@@ -12,7 +12,7 @@ No special requirements; note that this role requires root access, so either run
 
     - hosts: foobar
       roles:
-        - role: ansible-role-postfix
+        - role: thorian93.postfix
           become: yes
 
 ## Role Variables
@@ -114,7 +114,7 @@ Kudos to [HarryHarcourt](https://github.com/HarryHarcourt) for this idea!
         postfix_smtp_sasl_user: myemail@example.com
         postfix_smtp_sasl_password: password
       roles:
-        - ansible-role-postfix
+        - thorian93.postfix
 
 ## Contributing
 
