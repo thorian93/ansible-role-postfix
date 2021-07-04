@@ -44,7 +44,7 @@ Configure aliases to forward mail to.
     postfix_masquerade_domains: ""
     postfix_smtpd_use_tls: 'yes'
     postfix_smtp_sasl_auth_enable: 'false'
-    postfix_smtp_tls_CApath: "/etc/ssl/certs"
+    postfix_smtp_tls_capath: "/etc/ssl/certs"
     postfix_smtp_use_tls: 'yes'
     postfix_local_recipient_map: ""
     postfix_smtp_sasl_security_options: ""

@@ -48,6 +48,9 @@
   template:
     src: sender_canonical_maps.j2
     dest: /etc/postfix/sender_canonical_maps
+    owner: root
+    group: root
+    mode: 0644
   when: postfix_rewrite_sender_address | length
   notify: restart postfix
 
