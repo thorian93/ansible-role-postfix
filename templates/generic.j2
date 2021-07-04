@@ -1,3 +1,5 @@
 # {{ ansible_managed }}
 
-{{ postfix_generic_maps }}
+{% for generic_map in postfix_generic_maps %}
+{{ generic_map }}}}
+{% endfor %}
