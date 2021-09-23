@@ -3,6 +3,5 @@ postfix_prerequisites:
   - postfix
   - ca-certificates
   - mailx
-  - postfix-pcre
 
 postfix_postalias: /usr/sbin/postalias
