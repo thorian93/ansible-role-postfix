@@ -2,6 +2,7 @@
 postfix_stable_os:
   - Debian 9
   - Debian 10
+  - Debian 11
   - Ubuntu 18
   - Ubuntu 20
   - CentOS 7
@@ -9,6 +10,8 @@ postfix_stable_os:
   - Fedora 31
   - Fedora 32
   - Fedora 33
+  - Fedora 34
+  - Fedora 35
   - SLES 11
   - SLES 12
   - openSUSE Leap 15
@@ -29,7 +32,8 @@ postfix_myhostname: "{{ inventory_hostname }}"
 postfix_myorigin: $myhostname
 postfix_mynetworks: "127.0.0.0/8 [::ffff:127.0.0.0]/104 [::1]/128"
 postfix_mydestination: $mydomain, $myhostname, localhost.$mydomain, localhost
-postfix_relayhost: []
+postfix_relayhost: ""
+postfix_relayhost_port: 25
 postfix_inet_interfaces: loopback-only
 postfix_inet_protocols: ipv4
 postfix_masquerade_domains: ""

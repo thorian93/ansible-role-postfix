@@ -46,7 +46,7 @@ virtual_alias_maps = pcre:/etc/postfix/virtual-pcre
 local_recipient_maps = {{ postfix_local_recipient_map }}
 {% endif %}
 {% if postfix_relayhost | length %}
-relayhost = [{{ postfix_relayhost }}]
+relayhost = [{{ postfix_relayhost }}]:{{ postfix_relayhost_port | default('25') }}
 {% endif %}
 mynetworks = {{ postfix_mynetworks }}
 mailbox_size_limit = 0

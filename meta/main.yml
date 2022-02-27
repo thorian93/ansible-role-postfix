@@ -17,22 +17,23 @@ galaxy_info:
     - smtp
 
   platforms:
-    # - name: EL
-    #   versions:
-    #     - 7
+    - name: EL
+      versions:
+        - 7
     #     - 8
     - name: Debian
       versions:
         - Stretch
         - Buster
-    # - name: Fedora
-    #   versions:
-    #     - 31
-    #     - 32
-    # - name: opensuse
-    #   versions:
-    #     - 15.2
-    #     - 42.2
+        - Bullseye
+    - name: Fedora
+      versions:
+        - 34
+        - 35
+    - name: opensuse
+      versions:
+        - 15.2
+        - 42.2
     - name: Ubuntu
       versions:
         - Bionic
